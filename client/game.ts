@@ -1,12 +1,11 @@
-import { Color, Engine } from "excalibur";
-import { SinglePlayerButton } from "./screen-elements/single-player-button";
+import { Color, DisplayMode, Engine } from "excalibur";
 import { SinglePlayerMode } from "./scenes/single-player-mode";
+import { SinglePlayerButton } from "./screen-elements/single-player-button";
 
 const engine = new Engine({
-  width: 1200,
-  height: 600,
   backgroundColor: Color.Black,
   antialiasing: false,
+  displayMode: DisplayMode.FullScreen
 });
 
 const button = new SinglePlayerButton();

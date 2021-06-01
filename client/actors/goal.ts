@@ -5,8 +5,10 @@ import {
   CollisionStartEvent,
   CollisionType,
   Color,
-  Shape,
+  Engine,
+  Shape
 } from "excalibur";
+import { getSmallestDraw } from "../helper/engine-helper";
 import { Ball } from "./ball";
 
 export class Goal extends Actor {
@@ -14,13 +16,14 @@ export class Goal extends Actor {
   private visualEffectDuration = 0;
   private readonly onGoalCallback?: Function;
 
-  constructor({ x, onGoalCallback }: { x: number; onGoalCallback?: Function }) {
+  constructor(engine: Engine, { x, onGoalCallback }: { x: number; onGoalCallback?: Function }) {
     super({
       x,
+      y: getSmallestDraw(engine) / 2,
       color: Color.Blue,
       body: new Body({
         collider: new Collider({
-          shape: Shape.Box(30, 1200),
+          shape: Shape.Box(getSmallestDraw(engine) / 50, getSmallestDraw(engine)),
           type: CollisionType.Fixed,
         }),
       }),

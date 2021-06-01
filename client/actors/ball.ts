@@ -4,23 +4,26 @@ import {
   Collider,
   CollisionType,
   Color,
+  Engine,
   Shape,
   Vector,
 } from "excalibur";
+import { getSmallestDraw } from "../helper/engine-helper";
 
 const STARTING_RADIUS = 5;
 
 export class Ball extends Actor {
   private radius: number;
   private visualEffectDuration = 0;
+  private screenSize: number;
   public bounceCount = 0;
 
-  constructor() {
+  constructor(engine: Engine) {
     super({
-      x: 1200 / 2,
-      y: 600 / 2,
+      x: getSmallestDraw(engine) / 2,
+      y: getSmallestDraw(engine) / 2,
       color: Color.White,
-      vel: new Vector(-300, 50),
+      vel: new Vector(getSmallestDraw(engine) / -2, getSmallestDraw(engine) / 100),
       body: new Body({
         collider: new Collider({
           shape: Shape.Circle(STARTING_RADIUS),
@@ -29,6 +32,7 @@ export class Ball extends Actor {
       }),
     });
 
+    this.screenSize = getSmallestDraw(engine);
     this.radius = STARTING_RADIUS;
   }
 
@@ -42,14 +46,14 @@ export class Ball extends Actor {
 
     if (
       (this.pos.x <= 0 && this.vel.x < 0) ||
-      (this.pos.x >= 1200 && this.vel.x >= 0)
+      (this.pos.x >= this.screenSize && this.vel.x >= 0)
     ) {
       this.vel.x = -this.vel.x;
     }
 
     if (
       (this.pos.y <= 0 && this.vel.y < 0) ||
-      (this.pos.y >= 600 && this.vel.y >= 0)
+      (this.pos.y >= this.screenSize && this.vel.y >= 0)
     ) {
       this.vel.y = -this.vel.y;
     }
@@ -57,10 +61,10 @@ export class Ball extends Actor {
 
   public bounce(objectY: number) {
     this.bounceCount += 1;
-    const yDiff = this.pos.y - objectY;
 
+    const yDiff = this.pos.y - objectY;
+    this.vel.y = yDiff * 4;
     this.vel.x *= -1;
-    this.vel.y = yDiff * 10;
 
     if (this.vel.x < 1000) {
       this.vel.x *= 1.1;
