@@ -1,15 +1,21 @@
 import { Color, Engine } from "excalibur";
-import { Ball } from "./actors/ball";
-import { Paddle } from "./actors/paddle";
+import { SinglePlayerButton } from "./screen-elements/single-player-button";
+import { SinglePlayerMode } from "./scenes/single-player-mode";
 
-const game = new Engine({
+const engine = new Engine({
   width: 1200,
   height: 600,
-  backgroundColor: Color.Black
+  backgroundColor: Color.Black,
+  antialiasing: false,
 });
 
-new Paddle({game, x: 100 });
-new Paddle({game, x: 1100 });
-new Ball(game);
+const button = new SinglePlayerButton();
 
-game.start();
+button.on("pointerup", () => {
+  engine.addScene("singleplayerstage", new SinglePlayerMode(engine));
+  engine.goToScene("singleplayerstage");
+});
+
+engine.add(button);
+
+engine.start();
