@@ -1,4 +1,4 @@
-import { Color, DisplayMode, Engine, Resolution } from "excalibur";
+import { Color, Engine } from "excalibur";
 import { Ball } from "./actors/ball";
 import { Paddle } from "./actors/paddle";
 
