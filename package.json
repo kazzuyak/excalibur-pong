@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node dist/server/server.js",
     "postinstall": "tsc && cp prod.html dist/client/game.html",
-    "dev": "nodemon server/server.ts"
+    "dev": "parcel client/game.html"
   },
   "author": "",
   "license": "ISC",
