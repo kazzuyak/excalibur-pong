@@ -4,26 +4,25 @@ import {
   Collider,
   CollisionType,
   Color,
-  Engine,
+
   Shape,
-  Vector,
+  Vector
 } from "excalibur";
-import { getSmallestDraw } from "../helper/engine-helper";
+import { ScreenInformation } from "../entities/screen-information";
 
 const STARTING_RADIUS = 5;
 
 export class Ball extends Actor {
   private radius: number;
   private visualEffectDuration = 0;
-  private screenSize: number;
   public bounceCount = 0;
 
-  constructor(engine: Engine) {
+  constructor(private readonly screenInformation: ScreenInformation) {
     super({
-      x: getSmallestDraw(engine) / 2,
-      y: getSmallestDraw(engine) / 2,
+      x: (screenInformation.minimumScreenSize / 2) + screenInformation.halfExtraX,
+      y: (screenInformation.minimumScreenSize / 2) + screenInformation.halfExtraY,
       color: Color.White,
-      vel: new Vector(getSmallestDraw(engine) / -2, getSmallestDraw(engine) / 100),
+      vel: new Vector(screenInformation.minimumScreenSize / -2, screenInformation.minimumScreenSize / 100),
       body: new Body({
         collider: new Collider({
           shape: Shape.Circle(STARTING_RADIUS),
@@ -32,7 +31,6 @@ export class Ball extends Actor {
       }),
     });
 
-    this.screenSize = getSmallestDraw(engine);
     this.radius = STARTING_RADIUS;
   }
 
@@ -45,15 +43,15 @@ export class Ball extends Actor {
     }
 
     if (
-      (this.pos.x <= 0 && this.vel.x < 0) ||
-      (this.pos.x >= this.screenSize && this.vel.x >= 0)
+      (this.pos.x <= this.screenInformation.halfExtraX && this.vel.x < 0) ||
+      (this.pos.x >= (this.screenInformation.minimumScreenSize + this.screenInformation.halfExtraX)&& this.vel.x >= 0)
     ) {
       this.vel.x = -this.vel.x;
     }
 
     if (
-      (this.pos.y <= 0 && this.vel.y < 0) ||
-      (this.pos.y >= this.screenSize && this.vel.y >= 0)
+      (this.pos.y <= this.screenInformation.halfExtraY && this.vel.y < 0) ||
+      (this.pos.y >= (this.screenInformation.minimumScreenSize + this.screenInformation.halfExtraY) && this.vel.y >= 0)
     ) {
       this.vel.y = -this.vel.y;
     }
