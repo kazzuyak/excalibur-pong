@@ -20,42 +20,42 @@ export class SinglePlayerMode extends Scene {
     this.ball = new Ball(screenInformation);
 
     const paddle = new Paddle(screenInformation, {
-      x: screenInformation.minimumScreenSize / 10 + screenInformation.halfExtraX,
+      x: screenInformation.screenSize / 10 + screenInformation.startingX,
     });
 
     const leftWall = new Wall({
-      x: screenInformation.halfExtraX,
-      y: screenInformation.minimumScreenSize / 2,
-      height: screenInformation.minimumScreenSize,
-      width: screenInformation.minimumScreenSize / 1000,
+      x: screenInformation.startingX,
+      y: screenInformation.screenSize / 2,
+      height: screenInformation.screenSize,
+      width: screenInformation.screenSize / 1000,
     });
     const rightWall = new Wall({
-      x: screenInformation.halfExtraX + screenInformation.minimumScreenSize,
-      y: screenInformation.minimumScreenSize / 2,
-      height: screenInformation.minimumScreenSize,
-      width: screenInformation.minimumScreenSize / 1000,
+      x: screenInformation.startingX + screenInformation.screenSize,
+      y: screenInformation.screenSize / 2,
+      height: screenInformation.screenSize,
+      width: screenInformation.screenSize / 1000,
     });
     const upWall = new Wall({
-      y: screenInformation.halfExtraY,
-      x: screenInformation.minimumScreenSize / 2,
-      width: screenInformation.minimumScreenSize,
-      height: screenInformation.minimumScreenSize / 1000,
+      y: screenInformation.startingY,
+      x: screenInformation.screenSize / 2,
+      width: screenInformation.screenSize,
+      height: screenInformation.screenSize / 1000,
     });
     const downWall = new Wall({
-      y: screenInformation.halfExtraY + screenInformation.minimumScreenSize,
-      x: screenInformation.minimumScreenSize / 2,
-      width: screenInformation.minimumScreenSize,
-      height: screenInformation.minimumScreenSize / 1000,
+      y: screenInformation.startingY + screenInformation.screenSize,
+      x: screenInformation.screenSize / 2,
+      width: screenInformation.screenSize,
+      height: screenInformation.screenSize / 1000,
     });
 
     this.score = new Label({
       text: "Score: 0",
       x:
-        screenInformation.minimumScreenSize * 0.8 +
-        screenInformation.halfExtraX,
+        screenInformation.screenSize * 0.8 +
+        screenInformation.startingX,
       y:
-        screenInformation.minimumScreenSize / 10 + screenInformation.halfExtraY,
-      fontSize: screenInformation.minimumScreenSize / 25,
+        screenInformation.screenSize / 10 + screenInformation.startingY,
+      fontSize: screenInformation.screenSize / 25,
       color: Color.White,
       fontStyle: FontStyle.Italic,
     });

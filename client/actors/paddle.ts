@@ -19,13 +19,13 @@ export class Paddle extends Actor {
   ) {
     super({
       x,
-      y: screenInformation.minimumScreenSize / 2 + screenInformation.halfExtraY,
+      y: screenInformation.screenSize / 2 + screenInformation.startingY,
       color: Color.Blue,
       body: new Body({
         collider: new Collider({
           shape: Shape.Box(
-            screenInformation.minimumScreenSize / 20,
-            screenInformation.minimumScreenSize / 5,
+            screenInformation.screenSize / 20,
+            screenInformation.screenSize / 5,
           ),
           type: CollisionType.Fixed,
         }),
@@ -42,20 +42,20 @@ export class Paddle extends Actor {
     if (
       engine.input.keyboard.isHeld(Input.Keys.W) &&
       this.pos.y -
-        (this.screenInformation.minimumScreenSize / 10 +
-          this.screenInformation.halfExtraY) >=
+        (this.screenInformation.screenSize / 10 +
+          this.screenInformation.startingY) >=
         0
     ) {
-      this.vel.y += delta * (this.screenInformation.minimumScreenSize / -50);
+      this.vel.y += delta * (this.screenInformation.screenSize / -50);
     }
     if (
       engine.input.keyboard.isHeld(Input.Keys.S) &&
       this.pos.y +
-        (this.screenInformation.minimumScreenSize / 10 +
-          this.screenInformation.halfExtraY) <=
+        (this.screenInformation.screenSize / 10 +
+          this.screenInformation.startingY) <=
         engine.drawHeight
     ) {
-      this.vel.y += delta * (this.screenInformation.minimumScreenSize / 50);
+      this.vel.y += delta * (this.screenInformation.screenSize / 50);
     }
   }
 
@@ -65,12 +65,12 @@ export class Paddle extends Actor {
 
       if (
         (this.pos.x <
-          this.screenInformation.minimumScreenSize / 2 +
-            this.screenInformation.halfExtraX &&
+          this.screenInformation.screenSize / 2 +
+            this.screenInformation.startingX &&
           ball.vel.x < 0) ||
         (this.pos.x >
-          this.screenInformation.minimumScreenSize / 2 +
-            this.screenInformation.halfExtraX &&
+          this.screenInformation.screenSize / 2 +
+            this.screenInformation.startingX &&
           ball.vel.x > 0)
       ) {
         ball.bounce(this.pos.y);

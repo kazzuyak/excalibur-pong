@@ -21,22 +21,22 @@ export class Ball extends Actor {
 
   constructor(private readonly screenInformation: ScreenInformation) {
     super({
-      x: screenInformation.minimumScreenSize / 2 + screenInformation.halfExtraX,
-      y: screenInformation.minimumScreenSize / 2 + screenInformation.halfExtraY,
+      x: screenInformation.screenSize / 2 + screenInformation.startingX,
+      y: screenInformation.screenSize / 2 + screenInformation.startingY,
       color: Color.White,
       vel: new Vector(
-        screenInformation.minimumScreenSize / -2,
-        screenInformation.minimumScreenSize / 100,
+        screenInformation.screenSize / -2,
+        screenInformation.screenSize / 100,
       ),
       body: new Body({
         collider: new Collider({
-          shape: Shape.Circle(screenInformation.minimumScreenSize / 200),
+          shape: Shape.Circle(screenInformation.screenSize / 200),
           type: CollisionType.Passive,
         }),
       }),
     });
 
-    this.startingRadius = screenInformation.minimumScreenSize / 200
+    this.startingRadius = screenInformation.screenSize / 200
     this.radius = this.startingRadius;
   }
 
@@ -48,30 +48,30 @@ export class Ball extends Actor {
       }
     }
 
-    if (this.pos.x <= this.screenInformation.halfExtraX && this.vel.x < 0) {
+    if (this.pos.x <= this.screenInformation.startingX && this.vel.x < 0) {
       this.vel.x *= -1;
       this.bouncesLeft += 1;
     }
 
     if (
       this.pos.x >=
-        this.screenInformation.minimumScreenSize +
-          this.screenInformation.halfExtraX &&
+        this.screenInformation.screenSize +
+          this.screenInformation.startingX &&
       this.vel.x >= 0
     ) {
       this.vel.x *= -1;
       this.bouncesRight += 1;
     }
 
-    if (this.pos.y <= this.screenInformation.halfExtraY && this.vel.y < 0) {
+    if (this.pos.y <= this.screenInformation.startingY && this.vel.y < 0) {
       this.vel.y *= -1;
       this.bouncesUp += 1;
     }
 
     if (
       this.pos.y >=
-        this.screenInformation.minimumScreenSize +
-          this.screenInformation.halfExtraY &&
+        this.screenInformation.screenSize +
+          this.screenInformation.startingY &&
       this.vel.y >= 0
     ) {
       this.vel.y *= -1;
