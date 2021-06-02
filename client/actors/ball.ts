@@ -4,34 +4,40 @@ import {
   Collider,
   CollisionType,
   Color,
-
   Shape,
-  Vector
+  Vector,
 } from "excalibur";
 import { ScreenInformation } from "../entities/screen-information";
 
-const STARTING_RADIUS = 5;
-
 export class Ball extends Actor {
   private radius: number;
+  private readonly startingRadius: number;
   private visualEffectDuration = 0;
   public bounceCount = 0;
+  public bouncesLeft = 0;
+  public bouncesRight = 0;
+  public bouncesUp = 0;
+  public bouncesDown = 0;
 
   constructor(private readonly screenInformation: ScreenInformation) {
     super({
-      x: (screenInformation.minimumScreenSize / 2) + screenInformation.halfExtraX,
-      y: (screenInformation.minimumScreenSize / 2) + screenInformation.halfExtraY,
+      x: screenInformation.minimumScreenSize / 2 + screenInformation.halfExtraX,
+      y: screenInformation.minimumScreenSize / 2 + screenInformation.halfExtraY,
       color: Color.White,
-      vel: new Vector(screenInformation.minimumScreenSize / -2, screenInformation.minimumScreenSize / 100),
+      vel: new Vector(
+        screenInformation.minimumScreenSize / -2,
+        screenInformation.minimumScreenSize / 100,
+      ),
       body: new Body({
         collider: new Collider({
-          shape: Shape.Circle(STARTING_RADIUS),
+          shape: Shape.Circle(screenInformation.minimumScreenSize / 200),
           type: CollisionType.Passive,
         }),
       }),
     });
 
-    this.radius = STARTING_RADIUS;
+    this.startingRadius = screenInformation.minimumScreenSize / 200
+    this.radius = this.startingRadius;
   }
 
   public onPostUpdate(_engine: ex.Engine, delta: number) {
@@ -42,18 +48,34 @@ export class Ball extends Actor {
       }
     }
 
-    if (
-      (this.pos.x <= this.screenInformation.halfExtraX && this.vel.x < 0) ||
-      (this.pos.x >= (this.screenInformation.minimumScreenSize + this.screenInformation.halfExtraX)&& this.vel.x >= 0)
-    ) {
-      this.vel.x = -this.vel.x;
+    if (this.pos.x <= this.screenInformation.halfExtraX && this.vel.x < 0) {
+      this.vel.x *= -1;
+      this.bouncesLeft += 1;
     }
 
     if (
-      (this.pos.y <= this.screenInformation.halfExtraY && this.vel.y < 0) ||
-      (this.pos.y >= (this.screenInformation.minimumScreenSize + this.screenInformation.halfExtraY) && this.vel.y >= 0)
+      this.pos.x >=
+        this.screenInformation.minimumScreenSize +
+          this.screenInformation.halfExtraX &&
+      this.vel.x >= 0
     ) {
-      this.vel.y = -this.vel.y;
+      this.vel.x *= -1;
+      this.bouncesRight += 1;
+    }
+
+    if (this.pos.y <= this.screenInformation.halfExtraY && this.vel.y < 0) {
+      this.vel.y *= -1;
+      this.bouncesUp += 1;
+    }
+
+    if (
+      this.pos.y >=
+        this.screenInformation.minimumScreenSize +
+          this.screenInformation.halfExtraY &&
+      this.vel.y >= 0
+    ) {
+      this.vel.y *= -1;
+      this.bouncesDown += 1;
     }
   }
 
@@ -68,7 +90,7 @@ export class Ball extends Actor {
       this.vel.x *= 1.1;
     }
 
-    if (this.radius > 1) {
+    if (this.radius > (this.startingRadius / 4)) {
       this.radius *= 0.9;
       this.body.collider.shape = Shape.Circle(this.radius);
     }
