@@ -19,7 +19,7 @@ export class Paddle extends Actor {
   ) {
     super({
       x,
-      y: screenInformation.screenSize / 2 + screenInformation.startingY,
+      y: screenInformation.halfY,
       color: Color.Blue,
       body: new Body({
         collider: new Collider({
@@ -65,12 +65,10 @@ export class Paddle extends Actor {
 
       if (
         (this.pos.x <
-          this.screenInformation.screenSize / 2 +
-            this.screenInformation.startingX &&
+          this.screenInformation.halfX &&
           ball.vel.x < 0) ||
         (this.pos.x >
-          this.screenInformation.screenSize / 2 +
-            this.screenInformation.startingX &&
+          this.screenInformation.halfX &&
           ball.vel.x > 0)
       ) {
         ball.bounce(this.pos.y);

@@ -30,7 +30,7 @@ export class SinglePlayerMode extends Scene {
       width: screenInformation.screenSize / 1000,
     });
     const rightWall = new Wall({
-      x: screenInformation.startingX + screenInformation.screenSize,
+      x: screenInformation.endingX,
       y: screenInformation.screenSize / 2,
       height: screenInformation.screenSize,
       width: screenInformation.screenSize / 1000,
@@ -42,7 +42,7 @@ export class SinglePlayerMode extends Scene {
       height: screenInformation.screenSize / 1000,
     });
     const downWall = new Wall({
-      y: screenInformation.startingY + screenInformation.screenSize,
+      y: screenInformation.endingY,
       x: screenInformation.screenSize / 2,
       width: screenInformation.screenSize,
       height: screenInformation.screenSize / 1000,

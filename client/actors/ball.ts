@@ -21,8 +21,8 @@ export class Ball extends Actor {
 
   constructor(private readonly screenInformation: ScreenInformation) {
     super({
-      x: screenInformation.screenSize / 2 + screenInformation.startingX,
-      y: screenInformation.screenSize / 2 + screenInformation.startingY,
+      x: screenInformation.halfX,
+      y: screenInformation.halfY,
       color: Color.White,
       vel: new Vector(
         screenInformation.screenSize / -2,
@@ -55,8 +55,7 @@ export class Ball extends Actor {
 
     if (
       this.pos.x >=
-        this.screenInformation.screenSize +
-          this.screenInformation.startingX &&
+        this.screenInformation.endingX &&
       this.vel.x >= 0
     ) {
       this.vel.x *= -1;
@@ -70,8 +69,7 @@ export class Ball extends Actor {
 
     if (
       this.pos.y >=
-        this.screenInformation.screenSize +
-          this.screenInformation.startingY &&
+        this.screenInformation.endingY &&
       this.vel.y >= 0
     ) {
       this.vel.y *= -1;
