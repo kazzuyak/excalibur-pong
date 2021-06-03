@@ -40,6 +40,8 @@ export class Paddle extends Actor {
       return;
     }
 
+    const isBottomPaddle = this.pos.y >= this.screen.halfY;
+
     this.vel.y = 0;
     this.vel.x = 0;
 
@@ -50,21 +52,37 @@ export class Paddle extends Actor {
       const pointer = engine.input.pointers.at(pointerId);
 
       if (pointer.isDragging) {
-        if (pointer.lastPagePos.x < this.screen.halfX) {
+        if (
+          pointer.lastPagePos.x < this.screen.halfX &&
+          ((isBottomPaddle && pointer.lastPagePos.y >= this.screen.halfY) ||
+            (!isBottomPaddle && pointer.lastPagePos.y < this.screen.halfY))
+        ) {
           moveLeft = true;
         }
 
-        if (pointer.lastPagePos.x >= this.screen.halfX) {
+        if (
+          pointer.lastPagePos.x >= this.screen.halfX &&
+          ((isBottomPaddle && pointer.lastPagePos.y >= this.screen.halfY) ||
+            (!isBottomPaddle && pointer.lastPagePos.y < this.screen.halfY))
+        ) {
           moveRight = true;
         }
       }
     }
 
-    if (engine.input.keyboard.isHeld(Input.Keys.A) || moveLeft) {
+    const keyboardMoveLeft =
+      (engine.input.keyboard.isHeld(Input.Keys.A) && isBottomPaddle) ||
+      (engine.input.keyboard.isHeld(Input.Keys.Left) && !isBottomPaddle);
+
+    const keyboardMoveRight =
+      (engine.input.keyboard.isHeld(Input.Keys.D) && isBottomPaddle) ||
+      (engine.input.keyboard.isHeld(Input.Keys.Right) && !isBottomPaddle);
+
+    if (keyboardMoveLeft || moveLeft) {
       this.moveLeft(delta);
     }
 
-    if (engine.input.keyboard.isHeld(Input.Keys.D) || moveRight) {
+    if (keyboardMoveRight || moveRight) {
       this.moveRight(delta);
     }
   }
