@@ -42,12 +42,6 @@ export class LocalMultiPlayerMode extends Scene {
       height: this.screen.screenSize,
       width: this.screen.screenSize / 500,
     });
-    const middleWall = new Wall({
-      y: this.screen.halfY,
-      x: this.screen.halfX,
-      width: this.screen.screenSize,
-      height: this.screen.screenSize / 500,
-    });
     const upWall = new Wall({
       y: this.screen.startingY,
       x: this.screen.screenSize / 2,
@@ -62,21 +56,21 @@ export class LocalMultiPlayerMode extends Scene {
     });
 
     this.topScoreLabel = new Label({
-      text: `Score: ${this.topScoreCount}`,
-      x: this.screen.startingX + this.screen.screenSize * 0.05,
-      y: this.screen.halfY - this.screen.screenSize * 0.02,
-      fontSize: this.screen.screenSize / 35,
+      text: "",
+      x: this.screen.endingX - this.screen.screenSize * 0.06,
+      y: this.screen.startingY + this.screen.screenSize * 0.02,
+      fontSize: this.screen.screenSize / 30,
       color: Color.White,
-      rotation: TwoPI * 0.75
+      rotation: TwoPI * 0.25
     });
 
     this.downScoreLabel = new Label({
-      text: `Score: ${this.downScoreCount}`,
-      x: this.screen.endingX - this.screen.screenSize * 0.05,
-      y: this.screen.halfY + this.screen.screenSize * 0.02,
-      fontSize: this.screen.screenSize / 35,
+      text: "",
+      x: this.screen.startingX + this.screen.screenSize * 0.06,
+      y: this.screen.endingY - this.screen.screenSize * 0.02,
+      fontSize: this.screen.screenSize / 30,
       color: Color.White,
-      rotation: TwoPI * 0.25
+      rotation: TwoPI * 0.75
     });
 
     this.add(this.downPaddle);
@@ -85,7 +79,6 @@ export class LocalMultiPlayerMode extends Scene {
     this.add(this.topScoreLabel);
     this.add(this.downScoreLabel);
 
-    this.add(middleWall);
     this.add(leftWall);
     this.add(upWall);
     this.add(downWall);
@@ -93,8 +86,8 @@ export class LocalMultiPlayerMode extends Scene {
   }
 
   public onPostUpdate(engine: Engine) {
-    this.topScoreLabel.text = `Score: ${this.topScoreCount}`;
-    this.downScoreLabel.text = `Score: ${this.downScoreCount}`;
+    this.topScoreLabel.text = "O".repeat(this.topScoreCount);
+    this.downScoreLabel.text = "O".repeat(this.downScoreCount);
 
     if (this.ball.bouncesDown > 0 || this.ball.bouncesUp > 0) {
       this.downScoreCount += this.ball.bouncesUp > 0 ? 1: 0;
