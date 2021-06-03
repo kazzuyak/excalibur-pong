@@ -15,18 +15,15 @@ import { Ball } from "./ball";
 export class Paddle extends Actor {
   constructor(
     private readonly screen: ScreenInformation,
-    { x }: { x: number },
+    parameters: { y: number },
   ) {
     super({
-      x,
-      y: screen.halfY,
+      y: parameters.y,
+      x: screen.halfX,
       color: Color.Blue,
       body: new Body({
         collider: new Collider({
-          shape: Shape.Box(
-            screen.screenSize / 20,
-            screen.screenSize / 5,
-          ),
+          shape: Shape.Box(screen.screenSize / 5, screen.screenSize / 20),
           type: CollisionType.Fixed,
         }),
       }),
@@ -40,22 +37,16 @@ export class Paddle extends Actor {
     this.vel.x = 0;
 
     if (
-      engine.input.keyboard.isHeld(Input.Keys.W) &&
-      this.pos.y -
-        (this.screen.screenSize / 10 +
-          this.screen.startingY) >=
-        0
+      engine.input.keyboard.isHeld(Input.Keys.A) &&
+      this.pos.x - this.screen.screenSize / 10 >= this.screen.startingX
     ) {
-      this.vel.y += delta * (this.screen.screenSize / -50);
+      this.vel.x += delta * (this.screen.screenSize / -50);
     }
     if (
-      engine.input.keyboard.isHeld(Input.Keys.S) &&
-      this.pos.y +
-        (this.screen.screenSize / 10 +
-          this.screen.startingY) <=
-        engine.drawHeight
+      engine.input.keyboard.isHeld(Input.Keys.D) &&
+      this.pos.x + this.screen.screenSize / 10 <= this.screen.endingX
     ) {
-      this.vel.y += delta * (this.screen.screenSize / 50);
+      this.vel.x += delta * (this.screen.screenSize / 50);
     }
   }
 
@@ -64,14 +55,10 @@ export class Paddle extends Actor {
       const ball = collisionEvent.other;
 
       if (
-        (this.pos.x <
-          this.screen.halfX &&
-          ball.vel.x < 0) ||
-        (this.pos.x >
-          this.screen.halfX &&
-          ball.vel.x > 0)
+        (this.pos.y < this.screen.halfY && ball.vel.y < 0) ||
+        (this.pos.y > this.screen.halfY && ball.vel.y > 0)
       ) {
-        ball.bounce(this.pos.y);
+        ball.bounce(this.pos.x);
       }
     }
   }

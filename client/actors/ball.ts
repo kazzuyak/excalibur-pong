@@ -24,10 +24,7 @@ export class Ball extends Actor {
       x: screen.halfX,
       y: screen.halfY,
       color: Color.White,
-      vel: new Vector(
-        screen.screenSize / -2,
-        screen.screenSize / 100,
-      ),
+      vel: new Vector(screen.screenSize / 100, screen.screenSize / 2),
       body: new Body({
         collider: new Collider({
           shape: Shape.Circle(screen.screenSize / 200),
@@ -36,7 +33,7 @@ export class Ball extends Actor {
       }),
     });
 
-    this.startingRadius = screen.screenSize / 200
+    this.startingRadius = screen.screenSize / 200;
     this.radius = this.startingRadius;
   }
 
@@ -53,11 +50,7 @@ export class Ball extends Actor {
       this.bouncesLeft += 1;
     }
 
-    if (
-      this.pos.x >=
-        this.screen.endingX &&
-      this.vel.x >= 0
-    ) {
+    if (this.pos.x >= this.screen.endingX && this.vel.x >= 0) {
       this.vel.x *= -1;
       this.bouncesRight += 1;
     }
@@ -67,28 +60,24 @@ export class Ball extends Actor {
       this.bouncesUp += 1;
     }
 
-    if (
-      this.pos.y >=
-        this.screen.endingY &&
-      this.vel.y >= 0
-    ) {
+    if (this.pos.y >= this.screen.endingY && this.vel.y >= 0) {
       this.vel.y *= -1;
       this.bouncesDown += 1;
     }
   }
 
-  public bounce(objectY: number) {
+  public bounce(objectX: number) {
     this.bounceCount += 1;
 
-    const yDiff = this.pos.y - objectY;
-    this.vel.y = yDiff * 4;
-    this.vel.x *= -1;
+    const xDiff = this.pos.x - objectX;
+    this.vel.x = xDiff * 4;
+    this.vel.y *= -1;
 
-    if (this.vel.x < 1000) {
-      this.vel.x *= 1.1;
+    if (this.vel.y > this.screen.screenSize * -3) {
+      this.vel.y *= 1.1;
     }
 
-    if (this.radius > (this.startingRadius / 4)) {
+    if (this.radius > this.startingRadius / 4) {
       this.radius *= 0.9;
       this.body.collider.shape = Shape.Circle(this.radius);
     }

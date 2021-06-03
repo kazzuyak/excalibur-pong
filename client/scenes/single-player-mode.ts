@@ -1,6 +1,6 @@
 import { Color, Engine, FontStyle, Label, Scene } from "excalibur";
 import { Ball } from "../actors/ball";
-import { Wall } from "../actors/goal";
+import { Wall } from "../actors/wall";
 import { Paddle } from "../actors/paddle";
 import { ScreenInformation } from "../entities/screen-information";
 
@@ -14,7 +14,7 @@ export class SinglePlayerMode extends Scene {
     this.ball = new Ball(screen);
 
     const paddle = new Paddle(screen, {
-      x: screen.screenSize / 10 + screen.startingX,
+      y: screen.endingY - screen.screenSize / 20,
     });
 
     const leftWall = new Wall({
@@ -62,7 +62,7 @@ export class SinglePlayerMode extends Scene {
   }
 
   public onPostUpdate(engine: Engine) {
-    if (this.ball.bouncesLeft > 0) {
+    if (this.ball.bouncesDown > 0) {
       engine.goToScene("root");
       engine.removeScene("singleplayerstage");
     }
