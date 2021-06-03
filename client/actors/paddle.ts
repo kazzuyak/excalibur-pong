@@ -7,12 +7,15 @@ import {
   Engine,
   Input,
   PreCollisionEvent,
-  Shape
+  Shape,
+  Vector,
 } from "excalibur";
 import { ScreenInformation } from "../entities/screen-information";
 import { Ball } from "./ball";
 
 export class Paddle extends Actor {
+  public isPaused = false;
+
   constructor(
     private readonly screen: ScreenInformation,
     parameters: { y: number },
@@ -33,6 +36,10 @@ export class Paddle extends Actor {
   }
 
   public onPostUpdate(engine: Engine, delta: number) {
+    if (this.isPaused) {
+      return;
+    }
+
     this.vel.y = 0;
     this.vel.x = 0;
 
@@ -44,15 +51,14 @@ export class Paddle extends Actor {
 
       if (pointer.isDragging) {
         if (pointer.lastPagePos.x < this.screen.halfX) {
-          moveLeft = true
+          moveLeft = true;
         }
 
         if (pointer.lastPagePos.x >= this.screen.halfX) {
-          moveRight = true
+          moveRight = true;
         }
       }
     }
-
 
     if (engine.input.keyboard.isHeld(Input.Keys.A) || moveLeft) {
       this.moveLeft(delta);
@@ -61,6 +67,11 @@ export class Paddle extends Actor {
     if (engine.input.keyboard.isHeld(Input.Keys.D) || moveRight) {
       this.moveRight(delta);
     }
+  }
+
+  public pause() {
+    this.isPaused = true;
+    this.vel = new Vector(0, 0);
   }
 
   private moveLeft(delta: number) {

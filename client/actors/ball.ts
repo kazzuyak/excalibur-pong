@@ -10,14 +10,15 @@ import {
 import { ScreenInformation } from "../entities/screen-information";
 
 export class Ball extends Actor {
-  private radius: number;
-  private readonly startingRadius: number;
-  private visualEffectDuration = 0;
+  public isPaused = false;
   public bounceCount = 0;
   public bouncesLeft = 0;
   public bouncesRight = 0;
   public bouncesUp = 0;
   public bouncesDown = 0;
+  private radius: number;
+  private readonly startingRadius: number;
+  private visualEffectDuration = 0;
 
   constructor(private readonly screen: ScreenInformation) {
     super({
@@ -37,7 +38,16 @@ export class Ball extends Actor {
     this.radius = this.startingRadius;
   }
 
+  public pause() {
+    this.isPaused = true;
+    this.vel = new Vector(0, 0);
+  }
+
   public onPostUpdate(_engine: ex.Engine, delta: number) {
+    if (this.isPaused) {
+      return
+    }
+
     if (this.visualEffectDuration > 0) {
       this.visualEffectDuration -= delta;
       if (this.visualEffectDuration <= 0) {

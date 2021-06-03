@@ -1,27 +1,25 @@
-import { ScreenInformation } from "../entities/screen-information";
-
+interface IButton {
+  borderWidth: number;
+  fontSize: number;
+  height: number;
+  width: number;
+  x: number;
+  y: number;
+  text: string;
+  buttonId: string;
+  divId: string;
+}
 export class Button {
   public pressCount = 0;
-  private readonly id = this.constructor.name;
-  private readonly ui: HTMLElement | null;
-  private element!: HTMLElement | null;
   private isWritten = false;
 
-  constructor(
-    private screen: ScreenInformation,
-    private readonly text: string,
-  ) {
-    this.ui = document.getElementById("ui");
-
+  constructor(private options: IButton) {
     this.write();
   }
 
-  public update(screen: ScreenInformation) {
-    if (
-      screen.halfX !== this.screen.halfX ||
-      screen.halfY !== this.screen.halfY
-    ) {
-      this.screen = screen;
+  public update(options: IButton) {
+    if (options.x !== this.options.x || options.y !== this.options.y) {
+      this.options = options;
       this.remove();
 
       this.write();
@@ -33,49 +31,49 @@ export class Button {
   }
 
   public remove() {
-    this.element?.remove();
+    document.getElementById(this.options.divId)?.remove();
     this.isWritten = false;
   }
 
   public write() {
-    if (this.isWritten || this.ui === null) {
+    if (this.isWritten) {
       return;
     }
 
-    this.ui.innerHTML += `
+    const div = document.createElement("div");
+    div.id = this.options.divId;
+
+    div.innerHTML += `
       <button
-      id=${this.id}
+      id=${this.options.buttonId}
       style="
-        height: ${this.screen.screenSize * 0.15}px;
-        width: ${this.screen.screenSize * 0.8}px;
-        left: ${this.screen.startingX + this.screen.screenSize * 0.1}px;
-        top: ${this.screen.startingY + this.screen.screenSize * 0.15}px;
+        height: ${this.options.height}px;
+        width: ${this.options.width}px;
+        left: ${this.options.x}px;
+        top: ${this.options.y}px;
         border-color: white;
         position: absolute;
         color: white;
         cursor: pointer;
         background-color: transparent;
-        border-width: ${this.screen.screenSize * 0.01}px;
-        font-size: ${this.screen.screenSize * 0.06}px;
+        border-width: ${this.options.borderWidth}px;
+        font-size: ${this.options.fontSize}px;
         font-family: 'Times New Roman', Times, serif;
         touch-action: none;
       ">
-        ${this.text}
+        ${this.options.text}
       </button>`;
 
-    this.element = document.getElementById(this.id);
+    document.getElementById("ui")?.appendChild(div);
 
-    if (this.element === null) {
-      return;
-    }
-
-    this.element.addEventListener(
-      "pointerup",
-      () => {
-        this.pressCount += 1;
-      }
-    );
+    document
+      .getElementById(`${this.options.buttonId}`)
+      ?.addEventListener("pointerup", this.onClick.bind(this));
 
     this.isWritten = true;
+  }
+
+  private onClick() {
+    this.pressCount += 1;
   }
 }
