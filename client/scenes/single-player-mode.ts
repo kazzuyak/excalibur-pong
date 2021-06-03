@@ -1,10 +1,4 @@
-import {
-  Color,
-  Engine,
-  FontStyle,
-  Label,
-  Scene
-} from "excalibur";
+import { Color, Engine, FontStyle, Label, Scene } from "excalibur";
 import { Ball } from "../actors/ball";
 import { Wall } from "../actors/goal";
 import { Paddle } from "../actors/paddle";
@@ -15,47 +9,44 @@ export class SinglePlayerMode extends Scene {
   private score!: Label;
 
   public onInitialize(engine: Engine) {
-    const screenInformation = new ScreenInformation(engine);
+    const screen = new ScreenInformation(engine);
 
-    this.ball = new Ball(screenInformation);
+    this.ball = new Ball(screen);
 
-    const paddle = new Paddle(screenInformation, {
-      x: screenInformation.screenSize / 10 + screenInformation.startingX,
+    const paddle = new Paddle(screen, {
+      x: screen.screenSize / 10 + screen.startingX,
     });
 
     const leftWall = new Wall({
-      x: screenInformation.startingX,
-      y: screenInformation.screenSize / 2,
-      height: screenInformation.screenSize,
-      width: screenInformation.screenSize / 1000,
+      x: screen.startingX,
+      y: screen.screenSize / 2,
+      height: screen.screenSize,
+      width: screen.screenSize / 1000,
     });
     const rightWall = new Wall({
-      x: screenInformation.endingX,
-      y: screenInformation.screenSize / 2,
-      height: screenInformation.screenSize,
-      width: screenInformation.screenSize / 1000,
+      x: screen.endingX,
+      y: screen.screenSize / 2,
+      height: screen.screenSize,
+      width: screen.screenSize / 1000,
     });
     const upWall = new Wall({
-      y: screenInformation.startingY,
-      x: screenInformation.screenSize / 2,
-      width: screenInformation.screenSize,
-      height: screenInformation.screenSize / 1000,
+      y: screen.startingY,
+      x: screen.screenSize / 2,
+      width: screen.screenSize,
+      height: screen.screenSize / 1000,
     });
     const downWall = new Wall({
-      y: screenInformation.endingY,
-      x: screenInformation.screenSize / 2,
-      width: screenInformation.screenSize,
-      height: screenInformation.screenSize / 1000,
+      y: screen.endingY,
+      x: screen.screenSize / 2,
+      width: screen.screenSize,
+      height: screen.screenSize / 1000,
     });
 
     this.score = new Label({
       text: "Score: 0",
-      x:
-        screenInformation.screenSize * 0.8 +
-        screenInformation.startingX,
-      y:
-        screenInformation.screenSize / 10 + screenInformation.startingY,
-      fontSize: screenInformation.screenSize / 25,
+      x: screen.screenSize * 0.8 + screen.startingX,
+      y: screen.screenSize / 10 + screen.startingY,
+      fontSize: screen.screenSize / 25,
       color: Color.White,
       fontStyle: FontStyle.Italic,
     });

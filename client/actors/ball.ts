@@ -19,24 +19,24 @@ export class Ball extends Actor {
   public bouncesUp = 0;
   public bouncesDown = 0;
 
-  constructor(private readonly screenInformation: ScreenInformation) {
+  constructor(private readonly screen: ScreenInformation) {
     super({
-      x: screenInformation.halfX,
-      y: screenInformation.halfY,
+      x: screen.halfX,
+      y: screen.halfY,
       color: Color.White,
       vel: new Vector(
-        screenInformation.screenSize / -2,
-        screenInformation.screenSize / 100,
+        screen.screenSize / -2,
+        screen.screenSize / 100,
       ),
       body: new Body({
         collider: new Collider({
-          shape: Shape.Circle(screenInformation.screenSize / 200),
+          shape: Shape.Circle(screen.screenSize / 200),
           type: CollisionType.Passive,
         }),
       }),
     });
 
-    this.startingRadius = screenInformation.screenSize / 200
+    this.startingRadius = screen.screenSize / 200
     this.radius = this.startingRadius;
   }
 
@@ -48,28 +48,28 @@ export class Ball extends Actor {
       }
     }
 
-    if (this.pos.x <= this.screenInformation.startingX && this.vel.x < 0) {
+    if (this.pos.x <= this.screen.startingX && this.vel.x < 0) {
       this.vel.x *= -1;
       this.bouncesLeft += 1;
     }
 
     if (
       this.pos.x >=
-        this.screenInformation.endingX &&
+        this.screen.endingX &&
       this.vel.x >= 0
     ) {
       this.vel.x *= -1;
       this.bouncesRight += 1;
     }
 
-    if (this.pos.y <= this.screenInformation.startingY && this.vel.y < 0) {
+    if (this.pos.y <= this.screen.startingY && this.vel.y < 0) {
       this.vel.y *= -1;
       this.bouncesUp += 1;
     }
 
     if (
       this.pos.y >=
-        this.screenInformation.endingY &&
+        this.screen.endingY &&
       this.vel.y >= 0
     ) {
       this.vel.y *= -1;

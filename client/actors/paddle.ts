@@ -14,18 +14,18 @@ import { Ball } from "./ball";
 
 export class Paddle extends Actor {
   constructor(
-    private readonly screenInformation: ScreenInformation,
+    private readonly screen: ScreenInformation,
     { x }: { x: number },
   ) {
     super({
       x,
-      y: screenInformation.halfY,
+      y: screen.halfY,
       color: Color.Blue,
       body: new Body({
         collider: new Collider({
           shape: Shape.Box(
-            screenInformation.screenSize / 20,
-            screenInformation.screenSize / 5,
+            screen.screenSize / 20,
+            screen.screenSize / 5,
           ),
           type: CollisionType.Fixed,
         }),
@@ -42,20 +42,20 @@ export class Paddle extends Actor {
     if (
       engine.input.keyboard.isHeld(Input.Keys.W) &&
       this.pos.y -
-        (this.screenInformation.screenSize / 10 +
-          this.screenInformation.startingY) >=
+        (this.screen.screenSize / 10 +
+          this.screen.startingY) >=
         0
     ) {
-      this.vel.y += delta * (this.screenInformation.screenSize / -50);
+      this.vel.y += delta * (this.screen.screenSize / -50);
     }
     if (
       engine.input.keyboard.isHeld(Input.Keys.S) &&
       this.pos.y +
-        (this.screenInformation.screenSize / 10 +
-          this.screenInformation.startingY) <=
+        (this.screen.screenSize / 10 +
+          this.screen.startingY) <=
         engine.drawHeight
     ) {
-      this.vel.y += delta * (this.screenInformation.screenSize / 50);
+      this.vel.y += delta * (this.screen.screenSize / 50);
     }
   }
 
@@ -65,10 +65,10 @@ export class Paddle extends Actor {
 
       if (
         (this.pos.x <
-          this.screenInformation.halfX &&
+          this.screen.halfX &&
           ball.vel.x < 0) ||
         (this.pos.x >
-          this.screenInformation.halfX &&
+          this.screen.halfX &&
           ball.vel.x > 0)
       ) {
         ball.bounce(this.pos.y);
