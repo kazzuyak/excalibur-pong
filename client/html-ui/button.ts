@@ -58,6 +58,7 @@ export class Button {
         border-width: ${this.screen.screenSize * 0.01}px;
         font-size: ${this.screen.screenSize * 0.06}px;
         font-family: 'Times New Roman', Times, serif;
+        touch-action: none;
       ">
         ${this.text}
       </button>`;
@@ -68,9 +69,12 @@ export class Button {
       return;
     }
 
-    this.element.onclick = () => {
-      this.pressCount += 1;
-    };
+    this.element.addEventListener(
+      "pointerup",
+      () => {
+        this.pressCount += 1;
+      }
+    );
 
     this.isWritten = true;
   }
