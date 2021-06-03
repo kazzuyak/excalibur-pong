@@ -3,7 +3,7 @@ import { MainMenu } from "./scenes/main-menu";
 
 const engine = new Engine({
   backgroundColor: Color.Black,
-  antialiasing: false,
+  antialiasing: true,
   displayMode: DisplayMode.FullScreen,
 });
 

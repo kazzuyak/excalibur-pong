@@ -25,16 +25,16 @@ export class Ball extends Actor {
       x: screen.halfX,
       y: screen.halfY,
       color: Color.White,
-      vel: new Vector(screen.screenSize / 100, screen.screenSize / 2),
+      vel: new Vector(screen.screenSize / 100, screen.screenSize * 0.6),
       body: new Body({
         collider: new Collider({
-          shape: Shape.Circle(screen.screenSize / 200),
+          shape: Shape.Circle(screen.screenSize / 100),
           type: CollisionType.Passive,
         }),
       }),
     });
 
-    this.startingRadius = screen.screenSize / 200;
+    this.startingRadius = screen.screenSize / 100;
     this.radius = this.startingRadius;
   }
 
@@ -83,11 +83,11 @@ export class Ball extends Actor {
     this.vel.x = xDiff * 4;
     this.vel.y *= -1;
 
-    if (this.vel.y > this.screen.screenSize * -3) {
+    if (this.vel.y > this.screen.screenSize * -2) {
       this.vel.y *= 1.1;
     }
 
-    if (this.radius > this.startingRadius / 4) {
+    if (this.radius > this.startingRadius / 3) {
       this.radius *= 0.9;
       this.body.collider.shape = Shape.Circle(this.radius);
     }
