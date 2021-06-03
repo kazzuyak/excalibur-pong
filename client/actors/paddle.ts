@@ -7,7 +7,7 @@ import {
   Engine,
   Input,
   PreCollisionEvent,
-  Shape,
+  Shape
 } from "excalibur";
 import { ScreenInformation } from "../entities/screen-information";
 import { Ball } from "./ball";
@@ -36,16 +36,41 @@ export class Paddle extends Actor {
     this.vel.y = 0;
     this.vel.x = 0;
 
-    if (
-      engine.input.keyboard.isHeld(Input.Keys.A) &&
-      this.pos.x - this.screen.screenSize / 10 >= this.screen.startingX
-    ) {
+    let moveLeft = false;
+    let moveRight = false;
+
+    for (let pointerId = 0; pointerId < 4; pointerId++) {
+      const pointer = engine.input.pointers.at(pointerId);
+
+      if (pointer.isDragging) {
+        if (pointer.lastPagePos.x < this.screen.halfX) {
+          moveLeft = true
+        }
+
+        if (pointer.lastPagePos.x >= this.screen.halfX) {
+          moveRight = true
+        }
+      }
+    }
+
+
+    if (engine.input.keyboard.isHeld(Input.Keys.A) || moveLeft) {
+      this.moveLeft(delta);
+    }
+
+    if (engine.input.keyboard.isHeld(Input.Keys.D) || moveRight) {
+      this.moveRight(delta);
+    }
+  }
+
+  private moveLeft(delta: number) {
+    if (this.pos.x - this.screen.screenSize / 10 >= this.screen.startingX) {
       this.vel.x += delta * (this.screen.screenSize / -50);
     }
-    if (
-      engine.input.keyboard.isHeld(Input.Keys.D) &&
-      this.pos.x + this.screen.screenSize / 10 <= this.screen.endingX
-    ) {
+  }
+
+  private moveRight(delta: number) {
+    if (this.pos.x + this.screen.screenSize / 10 <= this.screen.endingX) {
       this.vel.x += delta * (this.screen.screenSize / 50);
     }
   }
