@@ -5,14 +5,16 @@ import { SinglePlayerButton } from "./screen-elements/single-player-button";
 const engine = new Engine({
   backgroundColor: Color.Black,
   antialiasing: false,
-  displayMode: DisplayMode.FullScreen
+  displayMode: DisplayMode.FullScreen,
 });
 
 const button = new SinglePlayerButton();
 
 button.on("pointerup", () => {
-  engine.addScene("singleplayerstage", new SinglePlayerMode(engine));
-  engine.goToScene("singleplayerstage");
+  if (engine.rootScene.isCurrentScene()) {
+    engine.addScene("singleplayerstage", new SinglePlayerMode(engine));
+    engine.goToScene("singleplayerstage");
+  }
 });
 
 engine.add(button);
