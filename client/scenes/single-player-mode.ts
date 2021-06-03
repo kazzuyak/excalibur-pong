@@ -75,7 +75,7 @@ export class SinglePlayerMode extends Scene {
 
       if (this.playAgainButton === undefined) {
         this.playAgainButton = new Button({
-          borderWidth: this.screen.screenSize * 0.001,
+          borderWidth: this.screen.screenSize * 0.003,
           fontSize: this.screen.screenSize * 0.06,
           height: this.screen.screenSize * 0.15,
           width: this.screen.screenSize * 0.65,
@@ -89,7 +89,7 @@ export class SinglePlayerMode extends Scene {
 
       if (this.goBackButton === undefined) {
         this.goBackButton = new Button({
-          borderWidth: this.screen.screenSize * 0.001,
+          borderWidth: this.screen.screenSize * 0.003,
           fontSize: this.screen.screenSize * 0.06,
           height: this.screen.screenSize * 0.15,
           width: this.screen.screenSize * 0.15,

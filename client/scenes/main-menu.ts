@@ -2,6 +2,7 @@ import { Engine, Scene } from "excalibur";
 import { ScreenInformation } from "../entities/screen-information";
 import { Button } from "../html-ui/button";
 import { LocalMultiPlayerMode } from "./local-multi-player";
+import { SinglePlayerMode } from "./single-player-mode";
 
 export class MainMenu extends Scene {
   private singlePlayerButton!: Button;
@@ -26,8 +27,8 @@ export class MainMenu extends Scene {
 
     if (this.singlePlayerButton.pressCount > 0) {
       this.singlePlayerButton.resetCount();
-      engine.addScene("LocalMultiplayerPlayerMode", new LocalMultiPlayerMode(engine));
-      engine.goToScene("LocalMultiplayerPlayerMode");
+      engine.addScene("SinglePlayerMode", new SinglePlayerMode(engine));
+      engine.goToScene("SinglePlayerMode");
     }
 
     this.multiPlayerButton.update(this.multiPlayerButtonOptions(screen));
@@ -46,7 +47,7 @@ export class MainMenu extends Scene {
 
   private singlePlayerButtonOptions(screen: ScreenInformation) {
     return {
-      borderWidth: screen.screenSize * 0.001,
+      borderWidth: screen.screenSize * 0.003,
       fontSize: screen.screenSize * 0.06,
       height: screen.screenSize * 0.15,
       width: screen.screenSize * 0.8,
@@ -60,7 +61,7 @@ export class MainMenu extends Scene {
 
   private multiPlayerButtonOptions(screen: ScreenInformation) {
     return {
-      borderWidth: screen.screenSize * 0.001,
+      borderWidth: screen.screenSize * 0.003,
       fontSize: screen.screenSize * 0.06,
       height: screen.screenSize * 0.15,
       width: screen.screenSize * 0.8,
