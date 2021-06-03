@@ -49,13 +49,17 @@ export class Ball extends Actor {
     this.bouncesRight = 0;
     this.bouncesUp = 0;
     this.bouncesDown = 0;
-    this.vel = new Vector(this.screen.screenSize / 100, this.screen.screenSize * 0.6);
+    this.vel = new Vector(
+      this.screen.screenSize / 100,
+      this.screen.screenSize * 0.4,
+    );
     this.pos = new Vector(this.screen.halfX, this.screen.halfY);
+    this.body.collider.shape = Shape.Circle(this.startingRadius);
   }
 
   public onPostUpdate(_engine: ex.Engine, delta: number) {
     if (this.isPaused) {
-      return
+      return;
     }
 
     if (this.visualEffectDuration > 0) {
