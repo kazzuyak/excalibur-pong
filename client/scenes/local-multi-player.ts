@@ -108,7 +108,7 @@ export class LocalMultiPlayerMode extends Scene {
           height: this.screen.screenSize * 0.15,
           width: this.screen.screenSize * 0.65,
           x: this.screen.startingX + this.screen.screenSize * 0.25,
-          y: this.screen.startingY + this.screen.screenSize * 0.2,
+          y: this.screen.startingY + this.screen.screenSize * 0.4,
           text: "Play Again",
           buttonId: "play-again-button",
           divId: "play-again-button-div"
@@ -122,7 +122,7 @@ export class LocalMultiPlayerMode extends Scene {
           height: this.screen.screenSize * 0.15,
           width: this.screen.screenSize * 0.15,
           x: this.screen.startingX + this.screen.screenSize * 0.1,
-          y: this.screen.startingY + this.screen.screenSize * 0.2,
+          y: this.screen.startingY + this.screen.screenSize * 0.4,
           text: "<",
           buttonId: "go-back-button",
           divId: "go-back-button-div"
