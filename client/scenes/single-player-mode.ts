@@ -1,7 +1,7 @@
 import { Color, Engine, FontStyle, Label, Scene } from "excalibur";
 import { Ball } from "../actors/ball";
-import { Wall } from "../actors/wall";
 import { Paddle } from "../actors/paddle";
+import { Wall } from "../actors/wall";
 import { ScreenInformation } from "../entities/screen-information";
 
 export class SinglePlayerMode extends Scene {
@@ -63,8 +63,8 @@ export class SinglePlayerMode extends Scene {
 
   public onPostUpdate(engine: Engine) {
     if (this.ball.bouncesDown > 0) {
-      engine.goToScene("root");
-      engine.removeScene("singleplayerstage");
+      engine.goToScene("MainMenu");
+      engine.removeScene("SinglePlayerMode");
     }
 
     this.score.text = `Score: ${this.ball.bounceCount}`;

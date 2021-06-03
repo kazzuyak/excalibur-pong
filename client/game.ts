@@ -1,6 +1,5 @@
 import { Color, DisplayMode, Engine } from "excalibur";
-import { SinglePlayerMode } from "./scenes/single-player-mode";
-import { SinglePlayerButton } from "./screen-elements/single-player-button";
+import { MainMenu } from "./scenes/main-menu";
 
 const engine = new Engine({
   backgroundColor: Color.Black,
@@ -8,15 +7,9 @@ const engine = new Engine({
   displayMode: DisplayMode.FullScreen,
 });
 
-const button = new SinglePlayerButton();
+const mainMenu = new MainMenu(engine);
 
-button.on("pointerup", () => {
-  if (engine.rootScene.isCurrentScene()) {
-    engine.addScene("singleplayerstage", new SinglePlayerMode(engine));
-    engine.goToScene("singleplayerstage");
-  }
-});
-
-engine.add(button);
+engine.addScene("MainMenu", mainMenu);
+engine.goToScene("MainMenu");
 
 engine.start();
