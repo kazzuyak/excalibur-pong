@@ -54,6 +54,7 @@ export class Ball extends Actor {
       this.screen.screenSize * 0.4,
     );
     this.pos = new Vector(this.screen.halfX, this.screen.halfY);
+    this.radius = this.startingRadius;
     this.body.collider.shape = Shape.Circle(this.startingRadius);
   }
 

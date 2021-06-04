@@ -26,7 +26,7 @@ export class Paddle extends Actor {
       color: Color.Blue,
       body: new Body({
         collider: new Collider({
-          shape: Shape.Box(screen.screenSize / 5, screen.screenSize / 20),
+          shape: Shape.Box(screen.screenSize / 5, screen.screenSize / 15),
           type: CollisionType.Fixed,
         }),
       }),
