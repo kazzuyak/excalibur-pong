@@ -26,25 +26,25 @@ export class SinglePlayerMode extends Scene {
       x: this.screen.startingX,
       y: this.screen.screenSize / 2,
       height: this.screen.screenSize,
-      width: this.screen.screenSize / 1000,
+      width: this.screen.screenSize / 400,
     });
     const rightWall = new Wall({
       x: this.screen.endingX,
       y: this.screen.screenSize / 2,
       height: this.screen.screenSize,
-      width: this.screen.screenSize / 1000,
+      width: this.screen.screenSize / 400,
     });
     const upWall = new Wall({
       y: this.screen.startingY,
       x: this.screen.screenSize / 2,
       width: this.screen.screenSize,
-      height: this.screen.screenSize / 1000,
+      height: this.screen.screenSize / 400,
     });
     const downWall = new Wall({
       y: this.screen.endingY,
       x: this.screen.screenSize / 2,
       width: this.screen.screenSize,
-      height: this.screen.screenSize / 1000,
+      height: this.screen.screenSize / 400,
     });
 
     this.score = new Label({
